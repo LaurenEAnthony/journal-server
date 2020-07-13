@@ -1,20 +1,19 @@
-require('dotenv').config();
-var express = require('express');
+require("dotenv").config();
+var express = require("express");
 var app = express();
-let sequelize = require('./db')
+let sequelize = require("./db");
 
-let journal = require('./controllers/journalcontroller');
-
-let user = require('./controllers/usercontroller');
+let user = require("./controllers/usercontroller");
+let journal = require("./controllers/journalcontroller");
 
 sequelize.sync();
-// sequelize.sync({force: true})   
+// sequelize.sync({force: true})
+app.use(require("./middleware/headers"));
 
 app.use(express.json());
 
-app.use('/journal', journal);
-app.use('/user', user);
-
+app.use("/journal", journal);
+app.use("/user", user);
 
 // app.use("/test", function (req, res) {
 //     res.send("This is a test route")
@@ -29,6 +28,5 @@ app.use('/user', user);
 // app.use('/journal', require('./controllers/journalcontroller'));
 
 app.listen(3000, function () {
-    console.log("app is listening on port 3000");
+  console.log("app is listening on port 3000");
 });
-
